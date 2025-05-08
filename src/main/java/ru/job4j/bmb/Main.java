@@ -11,7 +11,7 @@ import ru.job4j.bmb.services.TelegramBotService;
 @SpringBootApplication
 public class Main {
 		public static void main(String[] args) {
-				SpringApplication.run(Math.class, args);
+				SpringApplication.run(Main.class, args);
 		}
 
 		@Bean
