@@ -1,4 +1,4 @@
-package ru.job4j.bot.tg;
+package ru.job4j.bmb.tg;
 
 public class TelegramBotService {
 }

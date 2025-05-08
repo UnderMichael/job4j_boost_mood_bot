@@ -1,4 +1,4 @@
-package ru.job4j.bot.logging;
+package ru.job4j.bmb.logging;
 
 public class LoggingAspect {
 }

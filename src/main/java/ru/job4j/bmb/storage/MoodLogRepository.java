@@ -1,4 +1,4 @@
-package ru.job4j.bot.storage;
+package ru.job4j.bmb.storage;
 
 public class MoodLogRepository {
 }
