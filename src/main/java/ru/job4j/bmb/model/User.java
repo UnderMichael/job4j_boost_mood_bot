@@ -12,7 +12,9 @@ public class User {
 				if (o == this) {
 						return true;
 				}
-				if (o == null || getClass() != o.getClass()) return false;
+				if (o == null || getClass() != o.getClass()) {
+						return false;
+				}
 				User user = (User) o;
 				return clientId == user.clientId
 						&& chatId == user.chatId
