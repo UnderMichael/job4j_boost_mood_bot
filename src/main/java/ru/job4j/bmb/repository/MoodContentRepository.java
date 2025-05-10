@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import ru.job4j.bmb.model.Achievement;
 
 @Repository
-public interface AchievementRepository extends CrudRepository<Achievement, Long> {
+public interface MoodContentRepository extends CrudRepository<Achievement, Long> {
 }

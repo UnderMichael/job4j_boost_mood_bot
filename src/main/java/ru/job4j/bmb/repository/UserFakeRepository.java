@@ -15,8 +15,9 @@ public class UserFakeRepository implements UserRepository {
 		private final Map<Long, User> userMap = new HashMap<>();
 
 		@Override
-		public <S extends User> S save(S entity) {
-				return null;
+		public User save(User user) {
+				userMap.put(user.getClientId(), user);
+				return user;
 		}
 
 		@Override
@@ -25,8 +26,8 @@ public class UserFakeRepository implements UserRepository {
 		}
 
 		@Override
-		public Optional<User> findById(Long aLong) {
-				return Optional.empty();
+		public Optional<User> findById(Long clientId) {
+				return Optional.of(userMap.get(clientId));
 		}
 
 		@Override
@@ -72,15 +73,5 @@ public class UserFakeRepository implements UserRepository {
 		@Override
 		public void deleteAll() {
 
-		}
-
-		@Override
-		public User findByClientId(Long clientId) {
-				return userMap.get(clientId);
-		}
-
-		@Override
-		public void add(User user) {
-				userMap.put(user.getClientId(), user);
 		}
 }
