@@ -15,6 +15,15 @@ public class MoodContent {
 		private Mood mood;
 		private String text;
 
+		public MoodContent(Mood mood, String text) {
+				this.mood = mood;
+				this.text = text;
+		}
+
+		public MoodContent() {
+
+		}
+
 		@Override
 		public boolean equals(Object o) {
 				if (this == o) {
