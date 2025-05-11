@@ -57,15 +57,17 @@ public class Achievement {
 				return user;
 		}
 
-		public void setUser(User user) {
+		public Achievement setUser(User user) {
 				this.user = user;
+				return this;
 		}
 
 		public Award getAward() {
 				return award;
 		}
 
-		public void setAward(Award award) {
+		public Achievement setAward(Award award) {
 				this.award = award;
+				return this;
 		}
 }

@@ -25,4 +25,8 @@ public class MoodLogFakeRepository
 						.collect(Collectors.toList());
 		}
 
+		@Override
+		public List<MoodLog> findByUser(User user) {
+				return new ArrayList<>();
+		}
 }

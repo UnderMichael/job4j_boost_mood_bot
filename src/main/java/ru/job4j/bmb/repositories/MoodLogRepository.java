@@ -15,5 +15,7 @@ public interface MoodLogRepository extends CrudRepository<MoodLog, Long> {
 		List<MoodLog> findAll();
 
 		@Query("select u from User u where not exists (select ml from MoodLog ml where ml.user = u and ml.createdAt >= :startOfDay )")
-		public List<User> findUsersWhoDidNotVoteToday(@Param("startOfDay") long startOfDay);
+		List<User> findUsersWhoDidNotVoteToday(@Param("startOfDay") long startOfDay);
+
+		List<MoodLog> findByUser(User user);
 }

@@ -3,6 +3,7 @@ package ru.job4j.bmb.repositories;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import ru.job4j.bmb.model.Achievement;
+import ru.job4j.bmb.model.User;
 
 import java.util.List;
 
@@ -10,4 +11,6 @@ import java.util.List;
 public interface AchievementRepository extends CrudRepository<Achievement, Long> {
 		@Override
 		List<Achievement> findAll();
+
+		List<Achievement> findByUser(User user);
 }

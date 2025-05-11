@@ -48,16 +48,18 @@ public class MoodLog {
 				return user;
 		}
 
-		public void setUser(User user) {
+		public MoodLog setUser(User user) {
 				this.user = user;
+				return this;
 		}
 
 		public Mood getMood() {
 				return mood;
 		}
 
-		public void setMood(Mood mood) {
+		public MoodLog setMood(Mood mood) {
 				this.mood = mood;
+				return this;
 		}
 
 		public long getCreatedAt() {

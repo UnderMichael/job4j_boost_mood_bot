@@ -22,8 +22,9 @@ public class Content {
 				return text;
 		}
 
-		public void setText(String text) {
+		public Content setText(String text) {
 				this.text = text;
+				return this;
 		}
 
 		public InputFile getPhoto() {

@@ -74,4 +74,9 @@ public class UserFakeRepository implements UserRepository {
 		public void deleteAll() {
 
 		}
+
+		@Override
+		public User findByChatId(long chatId) {
+				return null;
+		}
 }
