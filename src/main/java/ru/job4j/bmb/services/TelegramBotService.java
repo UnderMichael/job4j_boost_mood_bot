@@ -8,9 +8,9 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import ru.job4j.bmb.content.Content;
 import ru.job4j.bmb.content.SentContent;
 import ru.job4j.bmb.exceptions.SentContentException;
-import ru.job4j.bmb.model.Content;
 
 @Service
 public class TelegramBotService extends TelegramLongPollingBot implements SentContent {

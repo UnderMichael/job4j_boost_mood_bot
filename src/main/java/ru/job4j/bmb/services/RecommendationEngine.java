@@ -1,8 +1,8 @@
 package ru.job4j.bmb.services;
 
 import org.springframework.stereotype.Service;
+import ru.job4j.bmb.content.Content;
 import ru.job4j.bmb.content.ContentProvider;
-import ru.job4j.bmb.model.Content;
 
 import java.util.List;
 import java.util.Random;

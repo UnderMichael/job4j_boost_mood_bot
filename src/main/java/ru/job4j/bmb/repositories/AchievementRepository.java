@@ -1,4 +1,4 @@
-package ru.job4j.bmb.repository;
+package ru.job4j.bmb.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
