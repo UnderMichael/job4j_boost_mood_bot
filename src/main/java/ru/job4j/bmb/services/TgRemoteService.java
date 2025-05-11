@@ -6,38 +6,27 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import ru.job4j.bmb.model.User;
 import ru.job4j.bmb.repository.UserRepository;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class TgRemoteService extends TelegramLongPollingBot {
-		public static final Map<String, String> MOOD_RESP = new HashMap<>();
-
-		static {
-				MOOD_RESP.put("lost_sock", "Носки — это коварные создания. Но не волнуйся, второй обязательно найдётся!");
-				MOOD_RESP.put("cucumber", "Огурец тоже дело серьёзное! Главное, не мариноваться слишком долго.");
-				MOOD_RESP.put("dance_ready", "Супер! Танцуй, как будто никто не смотрит. Или, наоборот, как будто все смотрят!");
-				MOOD_RESP.put("need_coffee", "Кофе уже в пути! Осталось только подождать... И ещё немного подождать...");
-				MOOD_RESP.put("sleepy", "Пора на боковую! Даже супергерои отдыхают, ты не исключение.");
-		}
 
 		private final String botName;
 		private final String botToken;
 		private final UserRepository userRepository;
 		private final TgUI tgUI;
+		private final BotCommandHandler handler;
 
 		public TgRemoteService(@Value("${telegram.bot.name}") String botName,
 		                       @Value("${telegram.bot.token}") String botToken,
 		                       UserRepository userRepository,
-		                       TgUI tgUI
+		                       TgUI tgUI, BotCommandHandler handler
 		) {
 				this.botName = botName;
 				this.botToken = botToken;
 				this.userRepository = userRepository;
 				this.tgUI = tgUI;
+				this.handler = handler;
 		}
 
 		@Override
@@ -53,33 +42,15 @@ public class TgRemoteService extends TelegramLongPollingBot {
 		@Override
 		public void onUpdateReceived(Update update) {
 				if (update.hasCallbackQuery()) {
-						var data = update.getCallbackQuery().getData();
-						var chatId = update.getCallbackQuery().getMessage().getChatId();
-						send(new SendMessage(String.valueOf(chatId), MOOD_RESP.get(data)));
+						handler.handleCallback(update.getCallbackQuery())
+								.ifPresent(content -> send(new SendMessage(content.getChatId().toString(), content.getText())));
 				}
 				if (update.hasMessage() && update.getMessage().hasText()) {
-						var message = update.getMessage();
-						if ("/start".equals(message.getText())) {
-								long chatId = update.getMessage().getChatId();
-								var user = new User();
-								user.setClientId(message.getFrom().getId());
-								user.setChatId(chatId);
-								userRepository.save(user);
-								send(sendButtons(chatId));
-						}
+						handler.commands(update.getMessage())
+								.ifPresent(content -> send(new SendMessage(content.getChatId().toString(), content.getText())));
 
 				}
 
-		}
-
-		public SendMessage sendButtons(long chatId) {
-				SendMessage message = new SendMessage();
-				message.setChatId(chatId);
-				message.setText("Как настроение сегодня?");
-
-				var inlineKeyboardMarkup = tgUI.buildButtons();
-				message.setReplyMarkup(inlineKeyboardMarkup);
-				return message;
 		}
 
 		public void send(SendMessage message) {
