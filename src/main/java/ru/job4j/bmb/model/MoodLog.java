@@ -66,7 +66,8 @@ public class MoodLog {
 				return createdAt;
 		}
 
-		public void setCreatedAt(long createdAt) {
+		public MoodLog setCreatedAt(long createdAt) {
 				this.createdAt = createdAt;
+				return this;
 		}
 }

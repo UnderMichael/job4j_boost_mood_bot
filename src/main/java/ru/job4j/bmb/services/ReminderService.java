@@ -31,12 +31,9 @@ public class ReminderService {
 
 				moodLogRepository.findUsersWhoDidNotVoteToday(startOfDay)
 						.stream()
-						.map(user -> {
-								var content = new Content(user.getChatId());
-								content.setMarkup(tgUI.buildButtons());
-								content.setText("Как настроение?");
-								return content;
-						})
+						.map(user -> new Content(user.getChatId())
+								.setMarkup(tgUI.buildButtons())
+								.setText("Как настроение?"))
 						.forEach(sentContent::sent);
 		}
 
