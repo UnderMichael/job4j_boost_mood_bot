@@ -17,6 +17,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MoodService {
@@ -41,6 +42,18 @@ public class MoodService {
 				this.publisher = publisher;
 		}
 
+		private Optional<Content> getLogsForDiapason(long diapason, String title, Long chatId) {
+				var moodLogs = userRepository.findByChatId(chatId).stream()
+						.flatMap(user -> moodLogRepository.findByUser(user).stream())
+						.sorted((a, b) -> Long.compare(b.getCreatedAt(), a.getCreatedAt()))
+						.takeWhile(log -> log.getCreatedAt() >= diapason)
+						.toList();
+				return Optional.of(
+						new Content(chatId)
+								.setText(formatMoodLogs(moodLogs, title))
+				);
+		}
+
 		public Content chooseMood(User user, Long moodId) {
 				var content = recommendationEngine.recommendFor(user.getChatId(), moodId);
 				moodRepository.findById(moodId)
@@ -54,20 +67,29 @@ public class MoodService {
 		}
 
 		public Optional<Content> weekMoodLogCommand(Long chatId, Long clientId) {
-				var content = new Content(chatId);
-				return Optional.of(content);
+				long oneWeekAgo = Instant.now()
+						.atZone(ZoneId.systemDefault())
+						.minusDays(7)
+						.toInstant()
+						.toEpochMilli();
+				return getLogsForDiapason(oneWeekAgo, "Логи за прошедшую неделю", chatId);
 		}
 
 		public Optional<Content> monthMoodLogCommand(long chatId, Long clientId) {
-				var content = new Content(chatId);
-				return Optional.of(content);
+				long oneMonthAgo = Instant.now()
+						.atZone(ZoneId.systemDefault())
+						.minusMonths(7)
+						.toInstant()
+						.toEpochMilli();
+				;
+				return getLogsForDiapason(oneMonthAgo, "Логи за прошедший месяц", chatId);
 		}
 
 		private String formatMoodLogs(List<MoodLog> logs, String title) {
 				if (logs.isEmpty()) {
 						return title + ":\nNo mood logs found.";
 				}
-				var sb = new StringBuilder();
+				var sb = new StringBuilder().append(title).append(":").append("\n\n");
 				logs.forEach(log -> {
 						String formattedDate = formatter.format(Instant.ofEpochSecond(log.getCreatedAt()));
 						sb.append(formattedDate).append(": ").append(log.getMood().getText()).append("\n");
@@ -76,7 +98,12 @@ public class MoodService {
 		}
 
 		public Optional<Content> awards(long chatId, Long clientId) {
-				var content = new Content(chatId);
-				return Optional.of(content);
+				var awards = userRepository.findByChatId(chatId).stream()
+						.flatMap(user -> achievementRepository.findByUser(user).stream())
+						.map(achievement -> achievement.getAward().getTitle() + ": " + achievement.getAward().getDescription())
+						.collect(Collectors.joining("\n\n"));
+				return Optional.of(
+						new Content(chatId)
+								.setText(awards));
 		}
 }
