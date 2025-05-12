@@ -81,7 +81,6 @@ public class MoodService {
 						.minusMonths(7)
 						.toInstant()
 						.toEpochMilli();
-				;
 				return getLogsForDiapason(oneMonthAgo, "Логи за прошедший месяц", chatId);
 		}
 
