@@ -15,6 +15,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -46,7 +47,7 @@ public class MoodService {
 				var moodLogs = userRepository.findByChatId(chatId).stream()
 						.flatMap(user -> moodLogRepository.findByUser(user).stream())
 						.sorted((a, b) -> Long.compare(b.getCreatedAt(), a.getCreatedAt()))
-						.takeWhile(log -> log.getCreatedAt() >= diapason)
+						.takeWhile(log -> log.getCreatedAt() <= diapason)
 						.toList();
 				return Optional.of(
 						new Content(chatId)
@@ -67,29 +68,20 @@ public class MoodService {
 		}
 
 		public Optional<Content> weekMoodLogCommand(Long chatId, Long clientId) {
-				long oneWeekAgo = Instant.now()
-						.atZone(ZoneId.systemDefault())
-						.minusDays(7)
-						.toInstant()
-						.toEpochMilli();
+				long oneWeekAgo = Instant.now().minus(7, ChronoUnit.DAYS).toEpochMilli();
 				return getLogsForDiapason(oneWeekAgo, "Логи за прошедшую неделю", chatId);
 		}
 
 		public Optional<Content> monthMoodLogCommand(long chatId, Long clientId) {
-				long oneMonthAgo = Instant.now()
-						.atZone(ZoneId.systemDefault())
-						.minusMonths(7)
-						.toInstant()
-						.toEpochMilli();
-				;
-				return getLogsForDiapason(oneMonthAgo, "Логи за прошедший месяц", chatId);
+				long oneWeekAgo = Instant.now().minus(1, ChronoUnit.MONTHS).toEpochMilli();
+				return getLogsForDiapason(oneWeekAgo, "Логи за прошедший месяц", chatId);
 		}
 
 		private String formatMoodLogs(List<MoodLog> logs, String title) {
 				if (logs.isEmpty()) {
 						return title + ":\nNo mood logs found.";
 				}
-				var sb = new StringBuilder().append(title).append(":").append("\n\n");
+				var sb = new StringBuilder();
 				logs.forEach(log -> {
 						String formattedDate = formatter.format(Instant.ofEpochSecond(log.getCreatedAt()));
 						sb.append(formattedDate).append(": ").append(log.getMood().getText()).append("\n");
