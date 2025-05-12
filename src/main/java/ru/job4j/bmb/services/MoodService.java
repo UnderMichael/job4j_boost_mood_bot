@@ -91,7 +91,7 @@ public class MoodService {
 				}
 				var sb = new StringBuilder().append(title).append(":").append("\n\n");
 				logs.forEach(log -> {
-						String formattedDate = formatter.format(Instant.ofEpochSecond(log.getCreatedAt()));
+						String formattedDate = formatter.format(Instant.ofEpochMilli(log.getCreatedAt()));
 						sb.append(formattedDate).append(": ").append(log.getMood().getText()).append("\n");
 				});
 				return sb.toString();
