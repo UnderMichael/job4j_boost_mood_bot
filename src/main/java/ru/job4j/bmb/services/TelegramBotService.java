@@ -56,14 +56,9 @@ public class TelegramBotService extends TelegramLongPollingBot implements SentCo
 										.chatId(content.getChatId())
 										.caption(content.getText())
 										.build());
-						} else if (content.getMarkup() != null) {
-								execute(SendMessage.builder()
-										.replyMarkup(content.getMarkup())
-										.text(content.getText())
-										.chatId(content.getChatId())
-										.build());
 						} else {
 								execute(SendMessage.builder()
+										.replyMarkup(content.getMarkup())
 										.text(content.getText())
 										.chatId(content.getChatId())
 										.build());
