@@ -46,15 +46,17 @@ public class User {
 				return clientId;
 		}
 
-		public void setClientId(long clientId) {
+		public User setClientId(long clientId) {
 				this.clientId = clientId;
+				return this;
 		}
 
 		public long getChatId() {
 				return chatId;
 		}
 
-		public void setChatId(long chatId) {
+		public User setChatId(long chatId) {
 				this.chatId = chatId;
+				return this;
 		}
 }

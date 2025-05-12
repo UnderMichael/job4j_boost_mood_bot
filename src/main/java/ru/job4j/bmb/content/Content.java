@@ -39,8 +39,9 @@ public class Content {
 				return markup;
 		}
 
-		public void setMarkup(InlineKeyboardMarkup markup) {
+		public Content setMarkup(InlineKeyboardMarkup markup) {
 				this.markup = markup;
+				return this;
 		}
 
 		public InputFile getAudio() {

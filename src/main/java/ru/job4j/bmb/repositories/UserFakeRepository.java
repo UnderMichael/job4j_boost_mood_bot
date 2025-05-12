@@ -76,7 +76,7 @@ public class UserFakeRepository implements UserRepository {
 		}
 
 		@Override
-		public User findByChatId(long chatId) {
-				return null;
+		public Optional<User> findByChatId(long chatId) {
+				return Optional.empty();
 		}
 }

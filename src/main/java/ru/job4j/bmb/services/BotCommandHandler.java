@@ -35,17 +35,22 @@ public class BotCommandHandler {
 		Optional<Content> handleCallback(CallbackQuery callback) {
 				var moodId = Long.valueOf(callback.getData());
 				var user = userRepository.findByChatId(callback.getFrom().getId());
-				return Optional.of(moodService.chooseMood(user, moodId));
+				return Optional.of(moodService.chooseMood(user.get(), moodId));
 		}
 
 		private Optional<Content> handleStartCommand(long chatId, Long clientId) {
-				var user = new User();
-				user.setClientId(clientId);
-				user.setChatId(chatId);
-				userRepository.save(user);
-				var content = new Content(user.getChatId());
-				content.setText("Как настроение?");
-				content.setMarkup(tgUI.buildButtons());
-				return Optional.of(content);
+				var user = userRepository.findByChatId(chatId)
+						.orElseGet(() -> new User()
+								.setClientId(clientId)
+								.setChatId(chatId));
+				if (user.getId() == null) {
+						System.out.println("created");
+						userRepository.save(user);
+				}
+				return Optional.of(
+						new Content(user.getChatId())
+								.setText("Как настроение?")
+								.setMarkup(tgUI.buildButtons())
+				);
 		}
 }
