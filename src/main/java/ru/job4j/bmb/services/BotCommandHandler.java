@@ -6,7 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.job4j.bmb.component.TgUI;
 import ru.job4j.bmb.content.Content;
 import ru.job4j.bmb.model.User;
-import ru.job4j.bmb.repositories.UserRepository;
+import ru.job4j.bmb.repository.UserRepository;
 
 import java.util.Optional;
 

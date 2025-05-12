@@ -3,6 +3,7 @@ package ru.job4j.bmb.repositories;
 import org.springframework.test.fake.CrudRepositoryFake;
 import ru.job4j.bmb.model.MoodLog;
 import ru.job4j.bmb.model.User;
+import ru.job4j.bmb.repository.MoodLogRepository;
 
 import java.util.ArrayList;
 import java.util.List;

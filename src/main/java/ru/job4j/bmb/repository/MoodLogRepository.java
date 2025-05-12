@@ -1,4 +1,4 @@
-package ru.job4j.bmb.repositories;
+package ru.job4j.bmb.repository;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

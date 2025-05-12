@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.job4j.bmb.component.TgUI;
 import ru.job4j.bmb.content.Content;
 import ru.job4j.bmb.content.SentContent;
-import ru.job4j.bmb.repositories.MoodLogRepository;
+import ru.job4j.bmb.repository.MoodLogRepository;
 
 import java.time.LocalDate;
 import java.time.ZoneId;

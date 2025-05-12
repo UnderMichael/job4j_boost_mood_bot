@@ -6,9 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.job4j.bmb.content.Content;
 import ru.job4j.bmb.events.UserEvent;
 import ru.job4j.bmb.model.Achievement;
-import ru.job4j.bmb.repositories.AchievementRepository;
-import ru.job4j.bmb.repositories.AwardRepository;
-import ru.job4j.bmb.repositories.MoodLogRepository;
+import ru.job4j.bmb.repository.AchievementRepository;
+import ru.job4j.bmb.repository.AwardRepository;
+import ru.job4j.bmb.repository.MoodLogRepository;
 
 @Service
 public class AchievementService implements ApplicationListener<UserEvent> {

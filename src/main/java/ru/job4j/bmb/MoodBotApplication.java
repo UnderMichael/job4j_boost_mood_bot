@@ -11,9 +11,9 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import ru.job4j.bmb.constants.InitialDbValues;
 import ru.job4j.bmb.model.MoodContent;
-import ru.job4j.bmb.repositories.AwardRepository;
-import ru.job4j.bmb.repositories.MoodContentRepository;
-import ru.job4j.bmb.repositories.MoodRepository;
+import ru.job4j.bmb.repository.AwardRepository;
+import ru.job4j.bmb.repository.MoodContentRepository;
+import ru.job4j.bmb.repository.MoodRepository;
 import ru.job4j.bmb.services.TelegramBotService;
 
 @EnableScheduling
