@@ -78,8 +78,6 @@ public class UserFakeRepository implements UserRepository {
 
 		@Override
 		public Optional<User> findByChatId(long chatId) {
-				return userMap.values().stream()
-						.filter(user -> user.getChatId() == chatId)
-						.findFirst();
+				return Optional.empty();
 		}
 }
