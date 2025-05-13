@@ -2,8 +2,6 @@ package ru.job4j.bmb.model;
 
 import jakarta.persistence.*;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.Objects;
 
 @Entity
@@ -42,9 +40,8 @@ public class MoodLog {
 				return id;
 		}
 
-		public MoodLog setId(Long id) {
+		public void setId(Long id) {
 				this.id = id;
-				return this;
 		}
 
 		public User getUser() {
@@ -71,11 +68,6 @@ public class MoodLog {
 
 		public MoodLog setCreatedAt(long createdAt) {
 				this.createdAt = createdAt;
-				return this;
-		}
-
-		public MoodLog setCreatedAt() {
-				this.createdAt = ZonedDateTime.now(ZoneId.systemDefault()).toInstant().toEpochMilli();
 				return this;
 		}
 }
