@@ -13,6 +13,7 @@ import ru.job4j.bmb.repository.UserRepository;
 
 import java.time.Instant;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -58,7 +59,7 @@ public class MoodService {
 				moodRepository.findById(moodId)
 						.ifPresent(mood -> moodLogRepository.save(
 								new MoodLog()
-										.setCreatedAt()
+										.setCreatedAt(ZonedDateTime.now(ZoneId.systemDefault()).toInstant().toEpochMilli())
 										.setUser(user)
 										.setMood(mood)));
 				publisher.publishEvent(new UserEvent(this, user));

@@ -41,9 +41,8 @@ public class Achievement {
 				return id;
 		}
 
-		public Achievement setId(Long id) {
+		public void setId(Long id) {
 				this.id = id;
-				return this;
 		}
 
 		public long getCreatedAt() {
