@@ -13,7 +13,6 @@ import ru.job4j.bmb.repository.UserRepository;
 
 import java.time.Instant;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -45,6 +44,7 @@ public class MoodService {
 		private Optional<Content> getLogsForDiapason(long diapason, String title, Long chatId) {
 				var moodLogs = userRepository.findByChatId(chatId).stream()
 						.flatMap(user -> moodLogRepository.findByUser(user).stream())
+						.peek(log -> System.out.println(log.getMood()))
 						.sorted((a, b) -> Long.compare(b.getCreatedAt(), a.getCreatedAt()))
 						.takeWhile(log -> log.getCreatedAt() >= diapason)
 						.toList();
@@ -59,7 +59,7 @@ public class MoodService {
 				moodRepository.findById(moodId)
 						.ifPresent(mood -> moodLogRepository.save(
 								new MoodLog()
-										.setCreatedAt(ZonedDateTime.now(ZoneId.systemDefault()).toInstant().toEpochMilli())
+										.setCreatedAt()
 										.setUser(user)
 										.setMood(mood)));
 				publisher.publishEvent(new UserEvent(this, user));
@@ -97,6 +97,7 @@ public class MoodService {
 		}
 
 		public Optional<Content> awards(long chatId, Long clientId) {
+				System.out.println(chatId);
 				var awards = userRepository.findByChatId(chatId).stream()
 						.flatMap(user -> achievementRepository.findByUser(user).stream())
 						.map(achievement -> achievement.getAward().getTitle() + ": " + achievement.getAward().getDescription())

@@ -45,8 +45,9 @@ public class Mood {
 				return id;
 		}
 
-		public void setId(Long id) {
+		public Mood setId(Long id) {
 				this.id = id;
+				return this;
 		}
 
 		public String getText() {
