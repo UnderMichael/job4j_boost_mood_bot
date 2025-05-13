@@ -44,6 +44,7 @@ public class BotCommandHandler {
 								.setClientId(clientId)
 								.setChatId(chatId));
 				if (user.getId() == null) {
+						System.out.println("created");
 						userRepository.save(user);
 				}
 				return Optional.of(
