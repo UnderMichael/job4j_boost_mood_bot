@@ -7,17 +7,17 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import ru.job4j.bmb.constants.InitialDbValues;
 import ru.job4j.bmb.model.MoodContent;
-import ru.job4j.bmb.repository.AwardRepository;
-import ru.job4j.bmb.repository.MoodContentRepository;
-import ru.job4j.bmb.repository.MoodRepository;
+import ru.job4j.bmb.repository.*;
 import ru.job4j.bmb.services.TelegramBot;
 
 @EnableScheduling
+@EnableTransactionManagement
 @SpringBootApplication
 @EnableAspectJAutoProxy
 public class MoodBotApplication {
@@ -42,6 +42,8 @@ public class MoodBotApplication {
 		@Bean
 		CommandLineRunner loadDatabase(MoodRepository moodRepository,
 		                               MoodContentRepository moodContentRepository,
+		                               SettingRepository settingRepository,
+		                               UserSettingRepository userSettingRepository,
 		                               AwardRepository awardRepository) {
 				return args -> {
 						var moods = moodRepository.findAll();
@@ -51,6 +53,7 @@ public class MoodBotApplication {
 						moodRepository.saveAll(InitialDbValues.MOODS.stream().map(MoodContent::getMood).toList());
 						moodContentRepository.saveAll(InitialDbValues.MOODS);
 						awardRepository.saveAll(InitialDbValues.AWARDS);
+						settingRepository.saveAll(InitialDbValues.SETTINGS);
 				};
 		}
 }

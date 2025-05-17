@@ -33,8 +33,9 @@ public class Content {
 				return photo;
 		}
 
-		public void setPhoto(InputFile photo) {
+		public Content setPhoto(InputFile photo) {
 				this.photo = photo;
+				return this;
 		}
 
 		public InlineKeyboardMarkup getMarkup() {
@@ -50,8 +51,9 @@ public class Content {
 				return audio;
 		}
 
-		public void setAudio(InputFile audio) {
+		public Content setAudio(InputFile audio) {
 				this.audio = audio;
+				return this;
 		}
 
 		@Override
