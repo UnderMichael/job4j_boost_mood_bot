@@ -24,8 +24,7 @@ public class ReminderService {
 		public ReminderService(SentContent sentContent,
 		                       MoodLogRepository moodLogRepository,
 		                       UserSettingRepository userSettingRepository,
-		                       TgUI tgUI,
-		                       MoodService moodService) {
+		                       TgUI tgUI, MoodService moodService) {
 				this.sentContent = sentContent;
 				this.moodLogRepository = moodLogRepository;
 				this.userSettingRepository = userSettingRepository;
