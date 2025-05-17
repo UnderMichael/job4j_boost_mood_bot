@@ -6,6 +6,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ContextConfiguration;
 import org.telegram.telegrambots.meta.api.objects.Chat;
@@ -20,10 +21,7 @@ import ru.job4j.bmb.repositories.AchievementsFakeRepository;
 import ru.job4j.bmb.repositories.MoodFakeRepository;
 import ru.job4j.bmb.repositories.MoodLogFakeRepository;
 import ru.job4j.bmb.repositories.UserFakeRepository;
-import ru.job4j.bmb.repository.AchievementRepository;
-import ru.job4j.bmb.repository.MoodLogRepository;
-import ru.job4j.bmb.repository.MoodRepository;
-import ru.job4j.bmb.repository.UserRepository;
+import ru.job4j.bmb.repository.*;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -45,7 +43,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 		RecommendationEngine.class,
 		AchievementRepository.class,
 		TgUI.class,
-		MoodFakeRepository.class
+		MoodFakeRepository.class,
+		SettingService.class,
 })
 class BotCommandHandlerTest {
 		@Autowired
@@ -56,8 +55,14 @@ class BotCommandHandlerTest {
 		private RecommendationEngine recommendationEngine;
 		@Autowired
 		private AchievementRepository achievementRepository;
+		@MockBean
+		private SettingRepository settingRepository;
+		@MockBean
+		private UserSettingRepository userSettingRepository;
 		@Autowired
 		private MoodService moodService;
+		@Autowired
+		private SettingService settingService;
 		@Autowired
 		private MoodRepository moodRepository;
 		@Autowired
