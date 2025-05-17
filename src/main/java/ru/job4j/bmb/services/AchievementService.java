@@ -15,9 +15,12 @@ public class AchievementService implements ApplicationListener<UserEvent> {
 		private final MoodLogRepository moodLogRepository;
 		private final AwardRepository awardRepository;
 		private final AchievementRepository achievementRepository;
-		private final TelegramBotService telegramBotService;
+		private final TelegramBot telegramBotService;
 
-		public AchievementService(MoodLogRepository moodLogRepository, AwardRepository awardRepository, AchievementRepository achievementRepository, TelegramBotService telegramBotService) {
+		public AchievementService(MoodLogRepository moodLogRepository,
+		                          AwardRepository awardRepository,
+		                          AchievementRepository achievementRepository,
+		                          TelegramBot telegramBotService) {
 				this.moodLogRepository = moodLogRepository;
 				this.awardRepository = awardRepository;
 				this.achievementRepository = achievementRepository;

@@ -14,7 +14,7 @@ import ru.job4j.bmb.model.MoodContent;
 import ru.job4j.bmb.repository.AwardRepository;
 import ru.job4j.bmb.repository.MoodContentRepository;
 import ru.job4j.bmb.repository.MoodRepository;
-import ru.job4j.bmb.services.TelegramBotService;
+import ru.job4j.bmb.services.TelegramBot;
 
 @EnableScheduling
 @SpringBootApplication
@@ -26,7 +26,7 @@ public class MoodBotApplication {
 		@Bean
 		public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 				return args -> {
-						var bot = ctx.getBean(TelegramBotService.class);
+						var bot = ctx.getBean(TelegramBot.class);
 						var botsApi = new TelegramBotsApi(DefaultBotSession.class);
 						try {
 								botsApi.registerBot(bot);
