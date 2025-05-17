@@ -15,7 +15,6 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -31,11 +30,8 @@ public class MoodService {
 				.ofPattern("dd-MM-yyyy HH:mm")
 				.withZone(ZoneId.systemDefault());
 
-		public MoodService(MoodRepository moodRepository,
-		                   MoodLogRepository moodLogRepository,
-		                   RecommendationEngine recommendationEngine,
-		                   UserRepository userRepository,
-		                   AchievementRepository achievementRepository,
+		public MoodService(MoodRepository moodRepository, MoodLogRepository moodLogRepository, RecommendationEngine recommendationEngine,
+		                   UserRepository userRepository, AchievementRepository achievementRepository,
 		                   ApplicationEventPublisher publisher) {
 				this.moodRepository = moodRepository;
 				this.moodLogRepository = moodLogRepository;
@@ -69,7 +65,7 @@ public class MoodService {
 				return content;
 		}
 
-		public Optional<Content> weekMoodLogCommand(Long chatId) {
+		public Optional<Content> weekMoodLogCommand(Long chatId, Long clientId) {
 				long oneWeekAgo = Instant.now()
 						.atZone(ZoneId.systemDefault())
 						.minusDays(7)
@@ -78,7 +74,7 @@ public class MoodService {
 				return getLogsForDiapason(oneWeekAgo, "Логи за прошедшую неделю", chatId);
 		}
 
-		public Optional<Content> monthMoodLogCommand(long chatId) {
+		public Optional<Content> monthMoodLogCommand(long chatId, Long clientId) {
 				long oneMonthAgo = Instant.now()
 						.atZone(ZoneId.systemDefault())
 						.minusMonths(7)
@@ -99,7 +95,7 @@ public class MoodService {
 				return sb.toString();
 		}
 
-		public Optional<Content> awards(long chatId) {
+		public Optional<Content> awards(long chatId, Long clientId) {
 				var awards = userRepository.findByChatId(chatId).stream()
 						.flatMap(user -> achievementRepository.findByUser(user).stream())
 						.map(achievement -> achievement.getAward().getTitle() + ": " + achievement.getAward().getDescription())
@@ -107,14 +103,5 @@ public class MoodService {
 				return Optional.of(
 						new Content(chatId)
 								.setText(awards));
-		}
-
-		public Optional<Content> dailyAdvice(long chatId) {
-				var user = userRepository.findByChatId(chatId)
-						.orElseThrow(() -> new NoSuchElementException("User not found"));
-				return moodLogRepository.findByUser(user).stream()
-						.min((a, b) -> Long.compare(b.getCreatedAt(), a.getCreatedAt()))
-						.map(MoodLog::getMood)
-						.map(mood -> recommendationEngine.recommendFor(chatId, mood.getId()));
 		}
 }
