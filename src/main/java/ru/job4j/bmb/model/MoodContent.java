@@ -11,25 +11,17 @@ public class MoodContent {
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private Long id;
 		@ManyToOne
-		@JoinColumn(name = "mood_id")
+		@JoinColumn(name = " mood_id")
 		private Mood mood;
 		private String text;
-		private String image;
-		private String audio;
 
-		public MoodContent(Mood mood, String text, String image, String audio) {
+		public MoodContent(Mood mood, String text) {
 				this.mood = mood;
 				this.text = text;
-				this.image = image;
-				this.audio = audio;
 		}
 
 		public MoodContent() {
 
-		}
-
-		public String getAudio() {
-				return audio;
 		}
 
 		@Override
@@ -71,9 +63,5 @@ public class MoodContent {
 
 		public void setText(String text) {
 				this.text = text;
-		}
-
-		public String getImage() {
-				return image;
 		}
 }

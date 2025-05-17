@@ -40,7 +40,6 @@ public class RealTelegramBotService extends TelegramBot {
 
 		@Override
 		public void sent(Content content) {
-				System.out.println(content);
 				try {
 						if (content.getAudio() != null) {
 								execute(SendAudio.builder()
