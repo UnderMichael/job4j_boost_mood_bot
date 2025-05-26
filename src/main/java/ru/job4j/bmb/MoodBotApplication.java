@@ -14,7 +14,10 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import ru.job4j.bmb.constants.InitialDbValues;
 import ru.job4j.bmb.model.MoodContent;
-import ru.job4j.bmb.repository.*;
+import ru.job4j.bmb.repository.AwardRepository;
+import ru.job4j.bmb.repository.MoodContentRepository;
+import ru.job4j.bmb.repository.MoodRepository;
+import ru.job4j.bmb.repository.SettingRepository;
 
 @EnableScheduling
 @EnableTransactionManagement
@@ -43,7 +46,6 @@ public class MoodBotApplication {
 		CommandLineRunner loadDatabase(MoodRepository moodRepository,
 		                               MoodContentRepository moodContentRepository,
 		                               SettingRepository settingRepository,
-		                               UserSettingRepository userSettingRepository,
 		                               AwardRepository awardRepository) {
 				return args -> {
 						var moods = moodRepository.findAll();

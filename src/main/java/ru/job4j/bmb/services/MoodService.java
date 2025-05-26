@@ -14,6 +14,7 @@ import ru.job4j.bmb.repository.UserRepository;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -113,7 +114,7 @@ public class MoodService {
 				var user = userRepository.findByChatId(chatId)
 						.orElseThrow(() -> new NoSuchElementException("User not found"));
 				return moodLogRepository.findByUser(user).stream()
-						.min((a, b) -> Long.compare(b.getCreatedAt(), a.getCreatedAt()))
+						.max(Comparator.comparingLong(MoodLog::getCreatedAt))
 						.map(MoodLog::getMood)
 						.map(mood -> recommendationEngine.recommendFor(chatId, mood.getId()));
 		}

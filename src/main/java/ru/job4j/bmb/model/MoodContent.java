@@ -53,8 +53,9 @@ public class MoodContent {
 				return id;
 		}
 
-		public void setId(Long id) {
+		public MoodContent setId(Long id) {
 				this.id = id;
+				return this;
 		}
 
 		public Mood getMood() {
