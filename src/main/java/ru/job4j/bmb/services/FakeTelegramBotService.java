@@ -3,22 +3,28 @@ package ru.job4j.bmb.services;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Service;
+import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.job4j.bmb.conditions.OnFakeTelegramMode;
 import ru.job4j.bmb.content.Content;
+import ru.job4j.bmb.content.SentContent;
 import ru.job4j.bmb.exceptions.SentContentException;
 
 @Service
 @Conditional(OnFakeTelegramMode.class)
-public class FakeTelegramBotService extends TelegramBot {
+public class FakeTelegramBotService extends TelegramLongPollingBot implements SentContent {
+		final BotCommandHandler handler;
+		final String botName;
 
 		public FakeTelegramBotService(@Value("${telegram.bot.name}") String botName,
 		                              @Value("${telegram.bot.token}") String botToken,
 		                              BotCommandHandler handler) {
-				super(botName, botToken, handler);
+				super(botToken);
+				this.handler = handler;
+				this.botName = botName;
 		}
 
 		@Override

@@ -4,6 +4,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.job4j.bmb.content.Content;
+import ru.job4j.bmb.content.SentContent;
 import ru.job4j.bmb.events.UserEvent;
 import ru.job4j.bmb.model.Achievement;
 import ru.job4j.bmb.repository.AchievementRepository;
@@ -15,12 +16,12 @@ public class AchievementService implements ApplicationListener<UserEvent> {
 		private final MoodLogRepository moodLogRepository;
 		private final AwardRepository awardRepository;
 		private final AchievementRepository achievementRepository;
-		private final TelegramBot telegramBotService;
+		private final SentContent telegramBotService;
 
 		public AchievementService(MoodLogRepository moodLogRepository,
 		                          AwardRepository awardRepository,
 		                          AchievementRepository achievementRepository,
-		                          TelegramBot telegramBotService) {
+		                          SentContent telegramBotService) {
 				this.moodLogRepository = moodLogRepository;
 				this.awardRepository = awardRepository;
 				this.achievementRepository = achievementRepository;

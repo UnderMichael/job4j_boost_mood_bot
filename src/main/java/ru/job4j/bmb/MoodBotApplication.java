@@ -8,13 +8,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import ru.job4j.bmb.constants.InitialDbValues;
 import ru.job4j.bmb.model.MoodContent;
 import ru.job4j.bmb.repository.*;
-import ru.job4j.bmb.services.TelegramBot;
 
 @EnableScheduling
 @EnableTransactionManagement
@@ -28,7 +28,7 @@ public class MoodBotApplication {
 		@Bean
 		public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 				return args -> {
-						var bot = ctx.getBean(TelegramBot.class);
+						var bot = ctx.getBean(TelegramLongPollingBot.class);
 						var botsApi = new TelegramBotsApi(DefaultBotSession.class);
 						try {
 								botsApi.registerBot(bot);
